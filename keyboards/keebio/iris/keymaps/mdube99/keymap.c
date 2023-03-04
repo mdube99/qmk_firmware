@@ -1,27 +1,22 @@
 #include QMK_KEYBOARD_H
 #include "features/select_word.h"
-#include "features/caps_word.h"
 
 
 #define _QWERTY 0
 #define _LOWER 1
 #define _RAISE 2
-#define _ADJUST 3
-#define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
+#define _GAME 3
 
 #define HOME_Z  LGUI_T(KC_T)
 #define HOME_SL RGUI_T(KC_SLSH)
-#define U_RDO C(KC_Y)
 #define U_PST C(KC_V)
 #define U_CPY C(KC_C)
-#define U_CUT C(KC_X)
-#define U_UND C(KC_Z)
 
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
   LOWER,
   RAISE,
-  ADJUST,
+  GAME,
 
   // Custom keycodes
   SELWORD,
@@ -56,7 +51,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_QWERTY] = LAYOUT(
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
-     KC_GRAVE,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                               KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  KC_BSPC,
+     KC_GRAVE,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                               KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  KC_MINUS,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                               KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,  KC_BSLS,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
@@ -64,7 +59,7 @@ MT(MOD_LCTL, KC_ESC), KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                 
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,     KC_PSCR,      TMUX_LEADER,  KC_N,   KC_M,    KC_COMM, KC_DOT,  KC_SLSH, TD(TD_SFT_QUES),
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                    KC_LGUI,  LOWER,   KC_SPC,                    KC_ENTER, RAISE,  KC_LALT
+                                    KC_LGUI,  LOWER,   KC_SPC,                    KC_ENTER, LT(RAISE, KC_BSPC),  KC_LALT
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   ),
 
@@ -72,7 +67,7 @@ MT(MOD_LCTL, KC_ESC), KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                 
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
      KC_PSCR, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,                            KC_END, KC_AMPR, KC_ASTR, KC_LBRC,  KC_RBRC, KC_MINUS, 
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     CMD_TAB,   KC_1,    KC_2,    KC_3,    KC_4,    KC_Y,                               U_RDO,   U_PST,   U_CPY,   U_CUT,   U_UND,   KC_EQL,
+     CMD_TAB,   KC_1,    KC_2,    KC_3,    KC_4,    KC_Y,                              KC_HOME, U_CPY,   U_PST,   KC_END,  KC_MINUS,   KC_EQL,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      TMUX_LEADER,  _______, KC_LEFT, KC_DEL, KC_UP,   KC_LBRC,                            KC_LEFT, KC_DOWN,  KC_UP,  KC_RIGHT, KC_RIGHT, KC_PIPE,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
@@ -92,28 +87,27 @@ MT(MOD_LCTL, KC_ESC), KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                 
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LALT, KC_MSTP, KC_MPLY, KC_VOLD, KC_PGDN,  KC_B,    KC_LPRN,          CG_TOGG, KC_BTN1, KC_BTN3, KC_BTN2, RGB_SAD, RGB_VAD, _______,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                    KC_UNDS, TG(ADJUST), KC_PMNS,                   _______, _______, _______
+                                    KC_UNDS, TG(GAME), KC_PMNS,                   _______, _______, _______
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   ),
 
-  [_ADJUST] = LAYOUT(
+  [_GAME] = LAYOUT(
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
-     QK_BOOT, _______, _______, _______, _______, _______,                            _______, _______, _______, _______, _______, _______,
+     KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                               KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  KC_MINUS,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     _______, _______, _______, _______, _______, _______,                            _______, _______, _______, _______, _______, _______,
+     KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                               KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,  KC_BSLS,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     _______, _______, _______, _______, _______, _______,                            _______, _______, _______, _______, _______, _______,
+     KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                                KC_H,    KC_J,    KC_K,    KC_L,  KC_SCLN, KC_QUOT,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     _______, _______, _______, _______, _______, _______, _______,          _______, _______, _______, _______, _______, _______, _______,
+     KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,     KC_PSCR,      TMUX_LEADER,  KC_N,   KC_M,    KC_COMM, KC_DOT,  KC_SLSH, TD(TD_SFT_QUES),
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                    _______, _______, _______,                   _______, _______, _______
+                                    KC_LGUI,  LOWER,   KC_SPC,                    KC_ENTER, LT(RAISE, KC_BSPC),  KC_LALT
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   )
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if (!process_select_word(keycode, record, SELWORD)) { return false; }
-  if (!process_caps_word(keycode, record)) { return false; }
 
   switch (keycode) {
     case QWERTY:
@@ -150,10 +144,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case LOWER:
       if (record->event.pressed) {
         layer_on(_LOWER);
-        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+        update_tri_layer(_LOWER, _RAISE, _GAME);
       } else {
         layer_off(_LOWER);
-        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+        update_tri_layer(_LOWER, _RAISE, _GAME);
 
         // when the layer toggler key for LOWER is released,
         // also release the LGUI key
@@ -164,18 +158,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case RAISE:
       if (record->event.pressed) {
         layer_on(_RAISE);
-        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+        update_tri_layer(_LOWER, _RAISE, _GAME);
       } else {
         layer_off(_RAISE);
-        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+        update_tri_layer(_LOWER, _RAISE, _GAME);
       }
       return false;
       break;
-    case ADJUST:
+    case GAME:
       if (record->event.pressed) {
-        layer_on(_ADJUST);
+        layer_on(_GAME);
       } else {
-        layer_off(_ADJUST);
+        layer_off(_GAME);
       }
       return false;
       break;
