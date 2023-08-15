@@ -59,13 +59,13 @@ MT(MOD_LCTL, KC_ESC), KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                 
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,     KC_PSCR,      TMUX_LEADER,  KC_N,   KC_M,    KC_COMM, KC_DOT,  KC_SLSH, TD(TD_SFT_QUES),
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                    KC_LGUI,  LOWER,   KC_SPC,                    KC_ENTER, LT(RAISE, KC_BSPC),  KC_LALT
+                                    KC_LGUI,  LOWER,   KC_SPC,                    KC_ENTER, LT(RAISE, KC_BSPC),  MT(MOD_LALT, MOD_RCTL)
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   ),
 
   [_LOWER] = LAYOUT(
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
-     KC_PSCR, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,                            KC_END, KC_AMPR, KC_ASTR, KC_LBRC,  KC_RBRC, KC_MINUS, 
+     KC_PSCR, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,                            KC_END, KC_AMPR, KC_ASTR, KC_LBRC,  KC_RBRC, KC_EQL, 
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      CMD_TAB,   KC_1,    KC_2,    KC_3,    KC_4,    KC_Y,                              KC_HOME, U_CPY,   U_PST,   KC_END,  KC_MINUS,   KC_EQL,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
